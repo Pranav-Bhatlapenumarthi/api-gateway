@@ -1,14 +1,21 @@
-import express from 'express';
-import cors from 'cors';
+import { createApp } from './app.js';
+import { env } from "./config/env.js";
+import { logger } from "./core/logger.js";
 
-const app = express();
+const app = createApp();
 
-app.use(cors());
+async function server() {
+  try {
+    app.listen(env.PORT, () => {
+      logger.info(
+        `API Gateway running on http://${env.HOST}:${env.PORT}`
+      );
+    });
+  } catch (error) {
+    logger.error(error);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+    process.exit(1);
+  }
+}
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
+server();
