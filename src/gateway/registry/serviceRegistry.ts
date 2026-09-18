@@ -34,6 +34,16 @@ export class ServiceRegistry {
     return undefined
   }
 
+  // to find the service using name
+  get(name: string): Service | undefined {
+    for (const service of this.services.values()) {
+      if (service.name === name && service.enabled) {
+        return service;
+      }
+    }
+    return undefined
+  }
+  
   // to get list of all existing services
   getAll(): Service[] {
     return Array.from(this.services.values());

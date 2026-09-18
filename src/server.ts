@@ -6,6 +6,9 @@ const app = createApp();
 
 async function server() {
   try {
+    app.get('/', (req, res) => {
+      res.send("Hello! You are at the root of the API Gateway!")
+    });
     app.listen(env.PORT, () => {
       logger.info(
         `API Gateway running on http://${env.HOST}:${env.PORT}`
@@ -13,7 +16,6 @@ async function server() {
     });
   } catch (error) {
     logger.error(error);
-
     process.exit(1);
   }
 }
